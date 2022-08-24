@@ -1,0 +1,22 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: build
+        run: |
+          javac --release 7 ./Inimakerv2.java
+          mkdir bin
+          jar cvfe ./bin/Inimakerv2.jar Inimakerv2 ./Inimakerv2.class
+          
+      - name: Upload binary
+        uses: actions/upload-artifact@v2
+        with:
+          name: jar
+          path: bin/ 
